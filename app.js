@@ -181,41 +181,112 @@ function filterItalianLargeServings(dishes) {
 let italianDishesWithLargeServings = filterItalianLargeServings(dishes);
 console.log('Italian dishes with large servings:', italianDishesWithLargeServings);
 
-
-
 //4. Create a function that will return only dishes whose id number matches their serving count.
 //Filter
+function filterDishesByIdAndServingCount(dishes) {
+    let matchingDishes = dishes.filter(function(dish) {
+        return dish.id === dish.servings;
+    });
 
+    return matchingDishes;
+}
+
+let dishesWithMatchingIdAndServingCount = filterDishesByIdAndServingCount(dishes);
+console.log('Dishes with matching id and serving count:', dishesWithMatchingIdAndServingCount);
 
 
 //5. Create a function that will return only dishes whose serving count is even.
 //Filter
+function filterDishesByEvenServingCount(dishes) {
+    let evenServingDishes = dishes.filter(function(dish) {
+        return dish.servings % 2 === 0;
+    });
 
+    return evenServingDishes;
+}
+
+let dishesWithEvenServingCount = filterDishesByEvenServingCount(dishes);
+console.log('Dishes with even serving count:', dishesWithEvenServingCount);
 
 
 //6. Create a function that will return dishes whose ingredients array INCLUDES "chickpea".
 //Hint: You do not want to check the array's indexes to find out what the array INCLUDES.
 //Double Hint: Research 'javascript does array include item'
 //Filter
+function filterDishesWithChickpeaIngredient(dishes) {
+    let chickpeaDishes = dishes.filter(function(dish) {
+        return dish.ingredients.includes("chickpea");
+    });
+
+    return chickpeaDishes;
+}
+
+let dishesWithChickpea = filterDishesWithChickpeaIngredient(dishes);
+console.log('Dishes with "chickpea" ingredient:', dishesWithChickpea);
 
 
 
 //7. Create a function that will prompt the user to type the name of one ingredient. Then use a filter to find all the dishes whose ingredients array INCLUDES that ingredient. Return the new array.
 //Filter
+function filterDishesByIngredient(dishes) {
+    const userInput = prompt("Enter the name of an ingredient:");
+    let dishesWithIngredient = dishes.filter(function(dish) {
+        return dish.ingredients.includes(userInput.toLowerCase());
+    });
+
+    return dishesWithIngredient;
+}
+
+let dishesWithUserIngredient = filterDishesByIngredient(dishes);
+console.log('Dishes with user-specified ingredient:', dishesWithUserIngredient);
 
 
 
 //8a. Create a function that will return an array of the string cuisine types. Ie, ["Italian", "Italian", "Mexican", ...]
 //Map
+function getCuisineTypes(dishes) {
+    let cuisineTypes = dishes.map(function(dish) {
+        return dish.cuisine;
+    });
+
+    return cuisineTypes;
+}
+
+let cuisineTypeArray = getCuisineTypes(dishes);
+console.log('Array of cuisine types:', cuisineTypeArray);
 
 
 
 //9. Create a function that will return an array of strings, with the cuisine type appended to the start of the dish's name. Ie, ["Italian Pizza", "Italian Spaghetti", ...]
 //Map 
+function getCuisineAndDishNames(dishes) {
+    let cuisineAndDishNames = dishes.map(function(dish) {
+        return dish.cuisine + " " + dish.name;
+    });
+
+    return cuisineAndDishNames;
+}
+
+let cuisineAndDishNameArray = getCuisineAndDishNames(dishes);
+console.log('Array of cuisine and dish names:', cuisineAndDishNameArray);
 
 
 
 //10. Create a function that will use advanced array methods on the 'dishes' array and return the result ["Vegetarian Lasagna", "Vegetarian Falafel", "Vegetarian Chili"]
+function getVegetarianDishNames(dishes) {
+    let vegetarianDishNames = dishes
+        .filter(function(dish) {
+            return dish.cuisine === "Vegetarian";
+        })
+        .map(function(dish) {
+            return dish.cuisine + " " + dish.name;
+        });
+
+    return vegetarianDishNames;
+}
+
+let vegetarianDishesResult = getVegetarianDishNames(dishes);
+console.log('Result:', vegetarianDishesResult);
 
 
 
@@ -224,12 +295,64 @@ console.log('Italian dishes with large servings:', italianDishesWithLargeServing
 //BONUS
 
 //8b. Use the filter method to eliminate duplicate from problem 8a.
+function getUniqueCuisineTypes(dishes) {
+    let uniqueCuisineTypes = [];
+    
+    dishes.forEach(function(dish) {
+        if (!uniqueCuisineTypes.includes(dish.cuisine)) {
+            uniqueCuisineTypes.push(dish.cuisine);
+        }
+    });
+
+    return uniqueCuisineTypes;
+}
+
+let uniqueCuisines = getUniqueCuisineTypes(dishes);
+console.log('Unique cuisine types:', uniqueCuisines);
+
 
 //11. Create a function that will return dishes whose ingredients array INCLUDES "tomato" OR "cheese".
 //Hint: You do not want to check the array's indexes to find out what the array INCLUDES.
 //Filter
+function filterDishesWithTomatoOrCheese(dishes) {
+    let tomatoOrCheeseDishes = dishes.filter(function(dish) {
+        return dish.ingredients.some(function(ingredient) {
+            return ingredient === "tomato" || ingredient === "cheese";
+        });
+    });
+
+    return tomatoOrCheeseDishes;
+}
+
+let dishesWithTomatoOrCheese = filterDishesWithTomatoOrCheese(dishes);
+console.log('Dishes with "tomato" or "cheese" ingredients:', dishesWithTomatoOrCheese);
+
 
 //12. Create a function that will return the total serving count of all dishes.
 //Must use Reduce, not a loop.
+function getTotalServingCount(dishes) {
+    let totalServingCount = dishes.reduce(function(acc, dish) {
+        return acc + dish.servings;
+    }, 0);
+
+    return totalServingCount;
+}
+
+let totalServings = getTotalServingCount(dishes);
+console.log('Total serving count of all dishes:', totalServings);
+
 
 //13. Create a function that will return an array of any objects that do not share a cuisine type with any other objects.
+function getUniqueCuisineObjects(dishes) {
+    let uniqueCuisineObjects = dishes.filter(function(dish, index) {
+        return !dishes.some(function(otherDish, otherIndex) {
+            return index !== otherIndex && dish.cuisine === otherDish.cuisine;
+        });
+    });
+
+    return uniqueCuisineObjects;
+}
+
+let uniqueCuisineDishes = getUniqueCuisineObjects(dishes);
+console.log('Objects with unique cuisine types:', uniqueCuisineDishes);
+
